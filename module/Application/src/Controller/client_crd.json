@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "angular-stacker-311411",
+    "private_key_id": "a3e141d0306a9d53075557d2f4dceeb1e8e8f43b",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCK2yDg/9MqoUHx\nOhvzrpU/c2HAlzDSgtrb07AWbcKT8f6YF2YD3GHKxd6dhw3/2NjiELyVIffvSacF\nAQkI1xOEEg1hbPtLjqbGKTrDznnk24sBapBBMurmIT7+bV6Xdm1OSCQ6NFVQLme+\n1R5fJ7gmOf/Q0iC01Aog1uVGBfRdElxfaiQ9lt/iFnoQRpIiYj/iJu8z8r9gXIEF\nyaf5Sl+tCDU7adNMogn8xC6p3lHBYla3bnG+YIwm3w5yGQqUWTqD6RS5NyN61GeD\n339w/aCkulfksHyfmfl+0pQ5FwAGFO9Lg9u3ZvyLbMCosT7JrRmB6PZZG9kZc0ik\nd2jyIN77AgMBAAECggEANPzT+iiFu6HX2Sb0nbQEjjcImYbYgayfuf15F8YA15Yk\nMoPTUSvbQZbqkbCE/hoRAYuje0GALJctnjI78VypvN9qrb/50WZ5a+s12pzDVTsW\nO48fx1GX5APR1yODUkdGBPZwpKlt2PAsdN08/tDYa/X8EgLtqjO0Pb3jtin1i0Iz\nd0iWBmaxa9c6RsExLbPN7vpI0yfFYeOzF0PW+xuxLpRDqMzFyLwFZ/+s5uS0YlSV\n0mw+SHrMT+b8c+tfT938Sl2jaVpCHanxrXTtJ78jZLwnI/YPv/lz4apr2KT6OuM4\nAiIR1PtZTmOE3aunkmR/LZPl6TdTq09xcjkCB3giAQKBgQDCuFwTYj5SrFsAIcd5\nrrfrbychI3X7Nh7yUfOXBpzTBjxE+zjfLjIow4mJjirAIULdE2iDrZqQW7to0Iea\nDa8HeLsbg4QkU5Bjhk2Kt4c3Y/aBqfXprnMut6Ag/wgRoA77i1EhLECA2hKm1uIo\nHfcsjJrKb1fex8nmoEIazJNn+wKBgQC2jhFMIA4QUkZXSClrEfha1CO/JUVu+Lye\n+oTG8J+vvSXvCC8VqHnJft2rZdD+0301IQSkp0wsbedh1kQ25KQzBQSe/Kp0bn/l\nAEbODhVJnSRjFHag17EWEKO4TP9P2YE4CzrDuZnSsaPuy11uqWBFxIntF3p+EwZF\nCnU9G8u1AQKBgCWlvW+l/ATB/CovXcDiDf9AE2Gt2H7EfQE+5QjbJ3EJcJeptto3\ntUz6WVo2GX/iLmpN+VQUOaEVi0t9neokISYhqpNsPx1C5tTHP7DFQShtdFingrs2\nlmB+8j/O70FxH9R0oC/4vVPsVdTaEQnOmV6MpNTk6ClTmW60p3NFAG8HAoGAGYKE\nvESGcpVsqum0j/e04sxeKmnE6BruELElOL+LMP2XfW2BVt9yFUwbIcZajCF1j6UL\nhw6xwEujV7KfWaRdpZt/58+a6iY+zPta6ZRiOSUyXn4Pja5WWqT8m9Z2nuvf+Lro\n/UzESAL2y3mzlrEoeNdcBruPLGrwJ1msxFtL/gECgYB6oLBLM25nxw/ICQupGlJQ\nEgegjnjvjEqOIUYjiLS0W67NdKJOchyw+JI2hdTTgkuTBRUZVwAY2Zu1dz8SayyQ\n0kDW74rfUPXbFQj5ERfnlluGB/sxBLifC2pqQ2oYgTIiP7SskEJORK/Hv/mFvh6I\nPLy02igjGXoN6HphZMtYig==\n-----END PRIVATE KEY-----\n",
+    "client_email": "translate-laminas@angular-stacker-311411.iam.gserviceaccount.com",
+    "client_id": "106744238345378131317",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/translate-laminas%40angular-stacker-311411.iam.gserviceaccount.com"
+  }
+  

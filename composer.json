@@ -14,7 +14,8 @@
         "laminas/laminas-component-installer": "^1.0 || ^2.1",
         "laminas/laminas-development-mode": "^3.2",
         "laminas/laminas-skeleton-installer": "^0.2 || ^1.0",
-        "laminas/laminas-mvc": "^3.1.1"
+        "laminas/laminas-mvc": "^3.1.1",
+        "google/apiclient": "^2.7"
     },
     "autoload": {
         "psr-4": {
@@ -39,7 +40,13 @@
             "php -r 'if (file_exists(\"CHANGELOG.md\")) unlink(\"CHANGELOG.md\");'"
         ],
         "serve": "php -S 0.0.0.0:8080 -t public",
-        "test": "phpunit"
+        "test": "phpunit",
+        "post-update-cmd": "Google\\Task\\Composer::cleanup"
+    },
+    "extra": {
+        "google/apiclient-services": [
+            "Translate"
+        ]
     },
     "scripts-descriptions": {
         "cs-check": "Run coding standards checks.",
