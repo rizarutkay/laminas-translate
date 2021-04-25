@@ -10,3 +10,7 @@
     background-color: var(--brand-color);
     border-color: var(--brand-color);
 }
+
+.withimg i {font-size: 60px;}
+
+.withimg{width:120px; background: transparent;border:none;}

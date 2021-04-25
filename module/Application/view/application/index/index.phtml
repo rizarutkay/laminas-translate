@@ -3,31 +3,16 @@
  * @var Laminas\View\Renderer\PhpRenderer $this
  */
 ?>
-<?php
-/**
- * @var Laminas\View\Renderer\PhpRenderer $this
- */
-?>
 
 
-<div style="width: 100%;">
 
-<div style="width:100%;height:450px;">
+<!--Mainbody   -->
+<div style="width:100%;height:100%;">
 
-<div style="width:100%;height:40px;    border: 1px solid #ced4da;border-bottom: none"> 
+<!--Header   -->
+<div style="width:100%;height:40px;"> 
 
-<div style="width:50%;float:left;height:100%;border-radius: 0.25rem;">
-
-<select class="custom-select">
-  <option selected>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
-
-</div>
-
-<div style="width:50%;float:left;">
+<div style="width:49%;float:left;height:100%;">
 <select class="custom-select">
   <option selected>Open this select menu</option>
   <option value="1">One</option>
@@ -36,42 +21,68 @@
 </select>
 </div>
 
+<div style="width:50%;float:left;"> <i id="exchange" class="fas fa-exchange-alt" style="cursor: pointer;"></i>
+<select class="custom-select">
+  <option selected>Open this select menu</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+</div>
 
 </div>
-<div style="width:100%;height:350px;">
+<!--Header   -->
 
-<div style="width:50%;float:left;height:150px;">
+<!--Textarea   -->
+<div style="width:100%;height:150px;">
+
+<div style="width:50%;float:left;height:100%;">
 <textarea class="form-control" id="metin" name="metin" maxlength="128" required></textarea> 
 </div>
 
-
-
- <div style="width:50%;float:left;height:150px;">
- <textarea class="form-control" id="metin" name="metin" maxlength="128" required></textarea> 
- </div>
-
-
-</div>
+<div style="width:50%;float:left;height:100%;">
+<textarea class="form-control" id="metin" name="metin" maxlength="128" required></textarea> 
 </div>
 
 </div>
+<!--Textarea   -->
 
-<div class="modal left" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
+<!--Çevir   -->
+<div class="col-md-12 text-center" style="padding-bottom: 50px;padding-top: 20px;">
+<button id="translate" class="btn btn-primary mb-3">Çevir</button> 
 </div>
+<!--Çevir   -->
+
+<!--Icons   -->
+<div class="col-md-12 text-center"> 
+<button class="withimg" id="history"><i class="fas fa-history"></i><br>Geçmiş</button>   
+<button class="withimg" id="favs"><i class="fas fa-star"></i><br>Kaydedilenler</button>
+</div>
+<!--Icons   -->
+
+</div>
+<!--Mainbody   -->
+
+<script>
+$('#translate').click(function() {
+console.log('translate');
+});
+
+$('#history').click(function() {
+console.log('history');
+});
+
+
+$('#favs').click(function() {
+console.log('favorite');
+});
+
+$('#exchange').click(function() {
+console.log('exchange');
+});
+
+
+
+
+
+</script>
