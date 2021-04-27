@@ -14,3 +14,15 @@
 .withimg i {font-size: 60px;}
 
 .withimg{width:120px; background: transparent;border:none;}
+
+.clearall{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #007bff;
+}
+.clearallcontainer{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}

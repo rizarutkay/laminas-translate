@@ -14,71 +14,53 @@ namespace Application\Controller;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Model\JsonModel;
-//use Predis;
 use Google_cli\Googlecli;
 use Predis_cli\Prediscli;
-//require '../../../../Predis/Autoloader.php';
-//require_once __DIR__ . "/../PHP/functions.php";
-//require_once __DIR__ . '/../../../../vendor/predis/predis/autoload.php';
-//Predis\Autoloader::register();
+
 require_once (__DIR__.'/google_cli.php');
 require_once (__DIR__.'/predis_cli.php');
 
 class IndexController extends AbstractActionController
 {
+
+    public function __construct()
+{
+    $this->googlecli=new Googlecli();    
+    $this->prediscli=new Prediscli();
+}
+
     public function indexAction()
     {
-        $predis=new Prediscli();
-        $value = $predis->getData();
+        $value = $this->prediscli->getLanguages();
         if($value===NULL){
-            $google=new Googlecli();
-            $lang=$google->supportedLanguages();
-            $predis->setData(json_encode($lang['languages']));
+            $lang=$this->googlecli->supportedLanguages();
+            $predis->setLanguages(json_encode($lang['languages']));
         }
-        $lang=json_decode($predis->getData());
-
-        //  $google=new Googlecli();
-        //  $lang=$google->supportedLanguages();
-        //  $asd=$google->translate();
-        //  var_dump($asd);
+        $lang=json_decode($this->prediscli->getLanguages());
         return new ViewModel(['languages'=>$lang]);
 
     }
 
     public function viewAction()
-    {
-
-//Predis\Autoloader::register();
-
-//$client = new Predis\Client();
-
-
-$predis=new Prediscli();
-$value = json_decode($predis->getData(),true);
-var_dump($value);
-
-// $client = new Predis\Client([
-//     'scheme' => 'tcp',
-//     'host'   => 'redis',
-//     'port'   => 6379,
-// ]);
-
-// $client->set('foo', 'anan');
-// $value = $client->get('foo');
-// var_dump($value);
-
-// $dizi=["firstName" => "Foo", "lastName" => "Bar"];
-// $client->hmset('user_details',$dizi);
-//get all as an Associate Array
-// $value=$client->hgetall('user_details');
-// var_dump($value);
-
-
-
-  }
+{
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+        session_start();
+        $tip=$this->params()->fromPost()['tip'];
+        $dizi=$_SESSION['history'];
+        $view=new ViewModel();
+        $view->setVariable('dizi',$dizi);
+        $view->setTerminal(true);
+        return $view;
+        
+    }
+    
+    else { return $this->redirect()->toUrl('/');}
+}
 
   public function translateAction()
   {
+    session_start();
     $request = $this->getRequest();
 
     if ($request->isPost()) {
@@ -87,28 +69,38 @@ var_dump($value);
         $targetlang=$formdata['target'];
         $content=$formdata['metin'];
 
-        if($sourcelang=='default'){$sourcelang=NULL;}
-        $google=new Googlecli();
+        if($sourcelang=='default'){
+        $sourcelang=$this->googlecli->detectLanguage($content);
+        }
+        
 
-        $translate=$google->translate($sourcelang,$targetlang,$content);
-        //var_dump($translate["translations"][0]->translatedText);
-        $dizi=['message'=>$translate["translations"][0]->translatedText];
-         
-        return new JsonModel($dizi);
+        $translate=$this->googlecli->translate($sourcelang,$targetlang,$content);
+        $response=$translate["translations"][0]->translatedText;
+
+        $source=$this->prediscli->getLangbycode($sourcelang); 
+        $target=$this->prediscli->getLangbycode($targetlang); 
+
+        $history=['source'=>$source[0],'target'=>$target[0],'content'=>$content,'translate'=>$response,'class'=>'btn btn-light mr-1'];
+
+         $dizi=$_SESSION['history'];
+         if(count($dizi)<20)
+         {$dizi[]=$history;}
+
+         else{
+         unset($dizi[0]);
+         $dizi[]=$history;
+         $dizi=array_values($dizi);}
+
+         $_SESSION['history']=$dizi;
+
+
+        return new JsonModel(['response'=>$response]);
+
     }
 
-else{
-    return new JsonModel([
-        'status' => 'SUCCESS',
-        'message'=>'Here is your data',
-        'data' => [
-            'full_name' => 'John Doe',
-            'address' => '51 Middle st.'
-        ]
-    ]);
-}
+else { return $this->redirect()->toUrl('/');}
 
-  }
+}
 
 
 }

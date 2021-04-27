@@ -16,16 +16,22 @@ function __construct() {
 
 
 
-function getData(){   
+function getLanguages(){   
     return $this->client->get('languages');
-    //return $this->client->get('foo');
+
     }
 
-    function setData($data){   
-        return $this->client->set('languages',$data);
-        //return $this->client->get('foo');
-        }
+function setLanguages($data){   
+   $this->client->set('languages',$data);
+   $data=json_decode($data,true);
+   foreach($data as $key => $value) {
+   $langcodes[$value["languageCode"]]= $value['displayName']; }
+   $this->client->hmset("getlangbycode", $langcodes);
 
+}
+function getLangbycode($code){
+    return $this->client->hmget("getlangbycode",$code);
 }
 
 
+}
