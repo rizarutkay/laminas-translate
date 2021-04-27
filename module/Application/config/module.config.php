@@ -26,6 +26,7 @@ return [
                         'action'     => 'index',
                     ],
                 ],
+
             ],
             'application' => [
                 'type'    => Segment::class,
@@ -36,6 +37,33 @@ return [
                         'action'     => 'index',
                     ],
                 ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    // Segment route for viewing one blog post
+                    'post' => [
+                        'type' => 'segment',
+                        'options' => [
+                            'route' => '/[:action]',
+                            'constraints' => [
+                                'action' => '[a-zA-Z0-9_-]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'view',
+                            ],
+                        ],
+                    ],
+                    //
+                    'translate' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/translate',
+                            'defaults' => [
+                                'action' => 'translate',
+                            ],
+                        ],
+                    ],
+                ],
+
             ],
         ],
     ],
@@ -58,6 +86,9 @@ return [
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
+        ],
+        'strategies' => [
+            'ViewJsonStrategy',
         ],
     ],
 ];

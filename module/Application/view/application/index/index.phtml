@@ -8,31 +8,26 @@
 
 <!--Mainbody   -->
 <div style="width:100%;height:100%;">
-
 <!--Header   -->
+<form id="translate" action="">
 <div style="width:100%;height:40px;"> 
 
 <div style="width:49%;float:left;height:100%;">
-<select class="custom-select">
-  <option selected>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
+<select class="custom-select" name="source">
+  <option value="default" selected>Dili Algıla</option>
+<?php foreach ($languages as $language) {echo '<option value='.$language->languageCode.'>'.$language->displayName.'</option>';}?>
 </select>
 </div>
 
 <div style="width:50%;float:left;"> <i id="exchange" class="fas fa-exchange-alt" style="cursor: pointer;"></i>
-<select class="custom-select">
-  <option selected>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
+<select class="custom-select" name="target">
+
+<?php  foreach ($languages as $language) {echo '<option value='.$language->languageCode.'>'.$language->displayName.'</option>';} ?>
 </select>
 </div>
 
 </div>
 <!--Header   -->
-
 <!--Textarea   -->
 <div style="width:100%;height:150px;">
 
@@ -41,31 +36,45 @@
 </div>
 
 <div style="width:50%;float:left;height:100%;">
-<textarea class="form-control" id="metin" name="metin" maxlength="128" required></textarea> 
+<textarea class="form-control" id="cevirimetin" name="cevirimetin" maxlength="128"  readonly></textarea> 
 </div>
 
 </div>
 <!--Textarea   -->
-
 <!--Çevir   -->
 <div class="col-md-12 text-center" style="padding-bottom: 50px;padding-top: 20px;">
-<button id="translate" class="btn btn-primary mb-3">Çevir</button> 
+<button type="submit" class="btn btn-primary mb-3">Çevir</button> 
 </div>
+</form>
 <!--Çevir   -->
-
 <!--Icons   -->
 <div class="col-md-12 text-center"> 
 <button class="withimg" id="history"><i class="fas fa-history"></i><br>Geçmiş</button>   
 <button class="withimg" id="favs"><i class="fas fa-star"></i><br>Kaydedilenler</button>
 </div>
 <!--Icons   -->
-
 </div>
 <!--Mainbody   -->
 
 <script>
-$('#translate').click(function() {
-console.log('translate');
+$('#translate').submit(function(e) {
+e.preventDefault();
+console.log();
+
+//JSON.stringify()
+//var form_data=JSON.stringify($("#translate").serialize());
+$.ajax({
+type: "POST",
+url: 'application/translate',
+data:$(this).serialize(),
+success: function(data){
+ $('#cevirimetin').val(data.message);
+    },
+
+});
+
+
+
 });
 
 $('#history').click(function() {
@@ -75,6 +84,14 @@ console.log('history');
 
 $('#favs').click(function() {
 console.log('favorite');
+
+$.ajax({
+type: "POST",
+url: 'application/view',
+
+
+});
+
 });
 
 $('#exchange').click(function() {
