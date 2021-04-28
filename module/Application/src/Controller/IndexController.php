@@ -50,7 +50,7 @@ public function search($data)
         $value = $this->prediscli->getLanguages();
         if($value===NULL){
             $lang=$this->googlecli->supportedLanguages();
-            $predis->setLanguages(json_encode($lang['languages']));
+            $this->prediscli->setLanguages(json_encode($lang['languages']));
         }
         $lang=json_decode($this->prediscli->getLanguages());
         return new ViewModel(['languages'=>$lang]);
