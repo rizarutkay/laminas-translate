@@ -2,7 +2,9 @@
 
 Projeyi github'tan clone'ladıktan sonra sırasıyla composer update , docker-compose build  ve  docker-compose up -d  cmd komutlarıyla docker üzerinden ayağa kaldırıp
 
-localhost:8000 adresinden tarayıcıda açabilirsiniz.Çeviri Google Translate Api V3(projects) kullanılmıştır. Sayfadaki eventler'de jquery ağırlıklı olmuştur ve ajax 
+localhost:8000 adresinden tarayıcıda açabilirsiniz.Composer update google client kütüphanesi ilk başta bütün servisleri indirdiği için biraz sürebilir script sonu otomatik olarak
+
+kullanılmayan servisleri kendi silecektir.Çeviri Google Translate Api V3(projects) kullanılmıştır. Sayfadaki eventler'de jquery ağırlıklı olmuştur ve ajax 
 
 çağrılarının sonuçlarına göre değişiklikler sayfaya yansımaktadır. Yapılan çevirileri geçmişte görebilir ve istediklerinizi kaydedilenlere alabilirsiniz.
 
