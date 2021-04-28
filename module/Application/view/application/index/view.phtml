@@ -4,33 +4,30 @@
  */
 ?>
 
-<?php 
-for($a=count($dizi)-1;$a>=0;$a--){
 
-    // echo $dizi[$a]['source'].'----->'.$dizi[$a]['target'].'<br><br>'.
-    // $dizi[$a]['content'].'<br>'.$dizi[$a]['translate'].'<br><hr>';  btn btn-success mr-1
-}?>
-
+<?php  if($tip=='his'){ echo '
 <div class="clearallcontainer">
 <button class="clearall">Tümünü Temizle</button>
-</div>
+</div>';} ?>
 
 
 <ul class="list-group">
 
-<?php for($a=count($dizi)-1;$a>=0;$a--){   
-echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-<div class="content">
-<p style="margin-bottom:14px">'.$dizi[$a]['source'].'<i class="fas fa-arrow-right"></i>'.$dizi[$a]['target'].'</p>
-<p class="mb-1">'.$dizi[$a]['content'].'</p>
-<p style="color:#8b8f94">'.$dizi[$a]['translate'].'</p>
-</div>
-<div class="btn-group" style="align-self:flex-start">
-<button class="'.$dizi[$a]['class'].'"><i class="fas fa-save" ></i></button>
-<button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-</div>
-</li>';
-}?>
+<?php if(!empty($dizi)){ $dizi = array_reverse($dizi,true);
+    foreach ($dizi as $key=>$row) { 
+        echo '<li id="li'.$key.'" class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="content">
+        <p style="margin-bottom:14px">'.$row['source'].'<i class="fas fa-arrow-right"></i>'.$row['target'].'</p>
+        <p class="mb-1">'.$row['content'].'</p>
+        <p style="color:#8b8f94">'.$row['translate'].'</p>
+        </div>
+        <div class="btn-group" style="align-self:flex-start">'; ?>
+        <?php if($tip=='his'){ echo '<button  id="'.$tip.$key.'" class="'.$row['class'].'"><i class="fas fa-save" ></i></button>';} 
+        echo '<button class="btn btn-danger" id="'.$tip.$key.'"><i class="fas fa-trash-alt"></i></button>
+        </div>
+        </li>';
+    }}
+?>
 
 </ul>
 

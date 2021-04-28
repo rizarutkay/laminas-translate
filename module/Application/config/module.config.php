@@ -62,6 +62,15 @@ return [
                             ],
                         ],
                     ],
+                    'update' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/update',
+                            'defaults' => [
+                                'action' => 'update',
+                            ],
+                        ],
+                    ],
                 ],
 
             ],

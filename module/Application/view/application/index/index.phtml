@@ -13,14 +13,14 @@
 <div style="width:100%;height:40px;"> 
 
 <div style="width:49%;float:left;height:100%;">
-<select class="custom-select" name="source">
+<select class="custom-select" name="source" id="source">
   <option value="default" selected>Dili Algıla</option>
 <?php foreach ($languages as $language) {echo '<option value='.$language->languageCode.'>'.$language->displayName.'</option>';}?>
 </select>
 </div>
 
-<div style="width:50%;float:left;"> <i id="exchange" class="fas fa-exchange-alt" style="cursor: pointer;"></i>
-<select class="custom-select" name="target">
+<div style="width:50%;float:left;"> <button id="exchange" type="button" class="exchangebutton" disabled="true"><i class="fas fa-exchange-alt"></i></button>
+<select class="custom-select" name="target" id="target">
 
 <?php  foreach ($languages as $language) {echo '<option value='.$language->languageCode.'>'.$language->displayName.'</option>';} ?>
 </select>
@@ -43,7 +43,7 @@
 <!--Textarea   -->
 <!--Çevir   -->
 <div class="col-md-12 text-center" style="padding-bottom: 50px;padding-top: 20px;">
-<button type="submit" class="btn btn-primary mb-3">Çevir</button> 
+<button id="cevirbtn" type="submit" class="btn btn-primary mb-3">Çevir</button> 
 </div>
 </form>
 <!--Çevir   -->
@@ -56,7 +56,7 @@
 </div>
 <!--Mainbody   -->
 
-
+<!--Modal main body -->
 <div class="modal left" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -66,7 +66,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="modal-body">
 
       </div>
       <div class="modal-footer">
@@ -75,60 +75,95 @@
     </div>
   </div>
 </div>
-
+<!--Modal main body -->
 
 
 <script>
-$('#translate').submit(function(e) {
+// ajax request gönder
+async function sendrequest(data,url){
+await $.ajax({
+type: "POST",
+url: url,
+data:data,
+success: function(data){response=data;},
+});
+return response;
+}
+
+//Çeviri yapıp ekrana basma
+$('#translate').submit(async function(e) {
 e.preventDefault();
-
-$.ajax({
-type: "POST",
-url: 'application/translate',
-data:$(this).serialize(),
-success: function(data){
- $('#cevirimetin').val(data.response); },
+$('#cevirbtn').attr('disabled', 'disabled');
+var response=await sendrequest($(this).serialize(),'application/translate'); console.log(response.response);
+if(response.status==false){ alert(response.response);}
+else {$('#cevirimetin').val(response.response)}
 });
 
+//History modal açma
+$('#history').click(async function() {
+//console.log('history');
+var response=await sendrequest({tip:'his'},'application/view'); 
+$('.modal-body').empty();
+$('.modal-body').append(response); $('#exampleModalLongTitle').text('Geçmiş')
+$('#myModal').modal();
 });
 
-$('#history').click(function() {
-console.log('history');
-$.ajax({
-type: "POST",
-url: 'application/view',
-data:{tip:'history'},
-success: function(data){
-  $('.modal-body').empty(data);
-$('.modal-body').append(data); $('#myModal').modal();
- },
-});
-
-
-});
-
-
-$('#favs').click(function() {
-console.log('favorite');
-
-$.ajax({
-type: "POST",
-url: 'application/view',
-data:{tip:'favs'},
-success: function(data){
-console.log(data.response); 
-$('.modal-body').append('asdasdasdsa'); $('#myModal').modal();
-},
-});
+//Kaydedilenler modal açma
+$('#favs').click(async function() {
+//console.log('favorite');
+var response=await sendrequest({tip:'fav'},'application/view');
+$('.modal-body').empty();
+$('.modal-body').append(response); $('#exampleModalLongTitle').text('Kaydedilenler')
+$('#myModal').modal();
 
 });
 
+// Yer değiştirme
 $('#exchange').click(function() {
-console.log('exchange');
+var source=$('#source').val();
+var target=$('#target').val();
+var metin=$('#metin').val();
+var translate=$('#cevirimetin').val();
+$('#source').val(target); $('#target').val(source); $('#metin').val(translate); $('#cevirimetin').val(metin);
 });
 
+$('#target,#source').change(function(e) { //console.log($(this));
+if($(this).val()=='default'){ $('#exchange').attr('disabled', 'disabled');  } 
+else {$('#exchange').removeAttr('disabled');}
+$('#cevirbtn').removeAttr('disabled');
+});
 
+$('#metin').keydown(function(e) {
+$('#cevirbtn').removeAttr('disabled');
+});
 
+// Geçmişten tekli silme
+$('#modal-body').on('click', 'button[class="btn btn-danger"]',async function() { 
+var str=$(this).attr("id"); var tip=str.substring(0,3); tip=tip+'-del'; 
+var response=await sendrequest({tip:tip,index:str.substr(3)},'application/update');
+$('#li'+str.substr(3)).remove();
+});
 
+// Geçmiş hepsini silme
+$('#modal-body').on('click', 'button[class="clearall"]',async function() { 
+var response=await sendrequest({tip:'clear-all'},'application/update'); $('.list-group').remove();
+});
+
+//Geçmiş Kaydetme
+$('#modal-body').on('click', 'button[class="btn btn-light mr-1"]',async function() { 
+//console.log('save hist');
+var str=$(this).attr("id"); var tip=str.substring(0,3);
+var response=await sendrequest({tip:'history-save',index:str.substr(3)},'application/update');
+//console.log(response.response);
+$(this).attr('class', 'btn btn-success mr-1');
+});
+
+//Geçmişten tekrar favoriden kaldırma
+$('#modal-body').on('click', 'button[class="btn btn-success mr-1"]',async function() { 
+var str=$(this).attr("id"); var tip=str.substring(0,3);
+var response=await sendrequest({tip:'history-unsave',index:str.substr(3)},'application/update');
+//console.log('remove hist fav');
+$(this).attr('class', 'btn btn-light mr-1');
+});
 
 </script>

@@ -32,6 +32,28 @@ function setLanguages($data){
 function getLangbycode($code){
     return $this->client->hmget("getlangbycode",$code);
 }
-
+function saveFavorite($data,$index)
+{
+    $dizi=json_decode($this->client->get('favs'),true);
+    $dizi[]=array_merge($data,['histid'=>$index]); $lastindex=array_key_last($dizi);
+    $this->client->set('favs',json_encode($dizi));
+    return $lastindex;
+}
+function getFavorite()
+{
+    $dizi=json_decode($this->client->get('favs'),true);
+    return $dizi;
+}
+function getFavoriteHistid($id)
+{
+    $dizi=json_decode($this->client->get('favs'),true);
+    return $dizi[$id]['histid'];
+}
+function removeFavorite($index)
+{
+    $dizi=json_decode($this->client->get('favs'),true);
+    unset($dizi[$index]);
+    $this->client->set('favs',json_encode($dizi));
+}
 
 }
